@@ -1,0 +1,22 @@
+# Python
+*.pyc
+__pycache__/
+
+# Environment files (contain secrets)
+.env
+.env.generated
+
+# Azure config
+.azure/
+
+# Logs
+*.log
+
+# Test files
+.test_tokens.json
+
+# Teams manifest (contains your App ID - use manifest.json.example as template)
+manifest.json
+
+# Deployment packages
+*.zip

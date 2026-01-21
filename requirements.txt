@@ -1,0 +1,24 @@
+# Microsoft Bot Framework
+botbuilder-core==4.14.8
+botbuilder-schema==4.14.8
+botbuilder-dialogs==4.14.8
+
+# SSO and token exchange
+msal>=1.26.0
+
+# Web server
+aiohttp==3.9.1
+gunicorn>=21.0.0
+
+# Databricks SDK for Genie API
+databricks-sdk>=0.20.0
+
+# Azure Key Vault SDK
+azure-identity>=1.15.0
+azure-keyvault-secrets>=4.7.0
+
+# Chart generation
+matplotlib>=3.8.0
+
+# Utilities
+python-dotenv==1.0.0

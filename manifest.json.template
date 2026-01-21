@@ -1,0 +1,43 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.16",
+  "version": "1.0.0",
+  "id": "{{APP_ID}}",
+  "packageName": "com.databricks.genie",
+  "developer": {
+    "name": "{{DEVELOPER_NAME}}",
+    "websiteUrl": "{{DEVELOPER_WEBSITE}}",
+    "privacyUrl": "{{DEVELOPER_PRIVACY}}",
+    "termsOfUseUrl": "{{DEVELOPER_TERMS}}"
+  },
+  "icons": {
+    "color": "icon-color.png",
+    "outline": "icon-outline.png"
+  },
+  "name": {
+    "short": "Databricks Genie",
+    "full": "Databricks Genie Bot"
+  },
+  "description": {
+    "short": "Query your data with natural language",
+    "full": "A bot that connects to Databricks Genie to answer natural language questions about your data. Ask questions in plain English and get instant insights!"
+  },
+  "accentColor": "#5C6BC0",
+  "bots": [
+    {
+      "botId": "{{APP_ID}}",
+      "scopes": ["personal", "team", "groupchat"],
+      "supportsFiles": false,
+      "isNotificationOnly": false
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": [
+    "{{APP_NAME}}.azurewebsites.net",
+    "token.botframework.com"
+  ],
+  "webApplicationInfo": {
+    "id": "{{APP_ID}}",
+    "resource": "api://botid-{{APP_ID}}"
+  }
+}
