@@ -2,15 +2,23 @@
 
 A Microsoft Teams bot that enables users to query their Databricks data using natural language through [Databricks Genie](https://docs.databricks.com/en/genie/index.html). Features **Single Sign-On (SSO)** with user identity flow - queries run with each user's own permissions for proper data governance.
 
+![Databricks Genie Bot in Action](image.png)
+
+*Ask questions in natural language, get SQL queries, data tables, and auto-generated visualizations.*
+
 ## Features
 
 - **Natural Language Queries** - Ask questions about your data in plain English
 - **User Identity Flow** - Queries run with the user's Databricks permissions (not a shared service account)
 - **SSO Authentication** - Seamless sign-in through Microsoft Teams
-- **Interactive Charts** - Visualizations with bar, line, pie, scatter, and area charts
+- **Auto-Generated Visualizations** - Charts automatically created based on your query results
+- **Interactive Charts** - Bar, line, pie, scatter, and area charts with zoom and download options
 - **Data Tables** - Paginated results with easy navigation
 - **Follow-up Questions** - Continue conversations with context
+- **SQL Transparency** - View the generated SQL queries
+- **Smart Suggestions** - "Try asking" prompts for follow-up questions
 - **Secure by Design** - Credentials stored in Azure Key Vault
+
 
 ## Architecture
 
