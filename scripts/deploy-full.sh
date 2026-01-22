@@ -12,13 +12,13 @@
 # Prerequisites:
 #   - Azure CLI installed and logged in (az login)
 #   - jq installed (for JSON processing)
-#   - .env file created from env.example with your values
+#   - .env file created from .env.example with your values
 #
 # Usage:
-#   chmod +x deploy-full.sh
-#   ./deploy-full.sh
+#   chmod +x scripts/deploy-full.sh
+#   ./scripts/deploy-full.sh
 #
-# For more details, see AZURE_DEPLOYMENT_GUIDE.md
+# For more details, see docs/AZURE_DEPLOYMENT_GUIDE.md
 # =============================================================================
 
 set -e  # Exit on error
@@ -118,7 +118,7 @@ phase1_prerequisites() {
         set +a
     else
         log_error ".env file not found!"
-        log_error "Please copy env.example to .env and fill in your values."
+        log_error "Please copy .env.example to .env and fill in your values."
         exit 1
     fi
     
@@ -555,8 +555,8 @@ phase5_manifest() {
     log_info "Generating manifest.json from template..."
     
     # Check if template exists
-    if [ ! -f "manifest.json.template" ]; then
-        log_error "manifest.json.template not found!"
+    if [ ! -f "teams-manifest/manifest.json.template" ]; then
+        log_error "teams-manifest/manifest.json.template not found!"
         exit 1
     fi
     
@@ -573,13 +573,13 @@ phase5_manifest() {
         -e "s/{{DEVELOPER_WEBSITE}}/$DEVELOPER_WEBSITE/g" \
         -e "s/{{DEVELOPER_PRIVACY}}/$DEVELOPER_PRIVACY/g" \
         -e "s/{{DEVELOPER_TERMS}}/$DEVELOPER_TERMS/g" \
-        manifest.json.template > manifest.json
+        teams-manifest/manifest.json.template > teams-manifest/manifest.json
     
     log_success "manifest.json generated"
     
     # Validate the manifest has correct values
-    MANIFEST_APP_ID=$(jq -r '.id' manifest.json)
-    MANIFEST_RESOURCE=$(jq -r '.webApplicationInfo.resource' manifest.json)
+    MANIFEST_APP_ID=$(jq -r '.id' teams-manifest/manifest.json)
+    MANIFEST_RESOURCE=$(jq -r '.webApplicationInfo.resource' teams-manifest/manifest.json)
     
     log_info "Manifest validation:"
     echo "  App ID: $MANIFEST_APP_ID"
@@ -604,13 +604,13 @@ phase5_manifest() {
     log_info "Creating Teams app package..."
     
     # Check for icons
-    if [ ! -f "icon-color.png" ] || [ ! -f "icon-outline.png" ]; then
+    if [ ! -f "teams-manifest/icon-color.png" ] || [ ! -f "teams-manifest/icon-outline.png" ]; then
         log_warning "Icon files not found. Teams app package may be incomplete."
     fi
     
     rm -f teams-app.zip
-    zip -j teams-app.zip manifest.json icon-color.png icon-outline.png 2>/dev/null || \
-    zip -j teams-app.zip manifest.json 2>/dev/null
+    zip -j teams-app.zip teams-manifest/manifest.json teams-manifest/icon-color.png teams-manifest/icon-outline.png 2>/dev/null || \
+    zip -j teams-app.zip teams-manifest/manifest.json 2>/dev/null
     
     log_success "Teams app package created: teams-app.zip"
 }
@@ -623,8 +623,8 @@ phase6_deployment() {
     log_phase "6" "Code Deployment"
     
     # Check for required files
-    if [ ! -f "app_azure.py" ]; then
-        log_error "app_azure.py not found!"
+    if [ ! -f "src/app_azure.py" ]; then
+        log_error "src/app_azure.py not found!"
         exit 1
     fi
     
@@ -637,17 +637,13 @@ phase6_deployment() {
     log_info "Creating deployment package..."
     
     rm -f deploy_package.zip
-    zip -r deploy_package.zip \
-        app_azure.py \
-        requirements.txt \
-        startup.sh \
-        icon-color.png \
-        icon-outline.png \
-        -x "*.pyc" -x "__pycache__/*" -x ".env*" -x "*.zip" 2>/dev/null || \
+    # Note: Azure App Service expects app_azure.py at root, so we copy it
+    cp src/app_azure.py app_azure.py
     zip -r deploy_package.zip \
         app_azure.py \
         requirements.txt \
         -x "*.pyc" -x "__pycache__/*" -x ".env*" -x "*.zip"
+    rm -f app_azure.py
     
     log_success "Deployment package created"
     
@@ -762,8 +758,8 @@ EOF
     echo ""
     echo -e "${GREEN}=============================================="
     echo "For detailed instructions, see:"
-    echo "  - AZURE_DEPLOYMENT_GUIDE.md"
-    echo "  - DATABRICKS_SETUP.md"
+    echo "  - docs/AZURE_DEPLOYMENT_GUIDE.md"
+    echo "  - docs/DATABRICKS_SETUP.md"
     echo "==============================================${NC}"
 }
 

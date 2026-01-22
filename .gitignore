@@ -1,22 +1,53 @@
 # Python
 *.pyc
 __pycache__/
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+env/
+*.egg-info/
+dist/
+build/
 
 # Environment files (contain secrets)
 .env
+.env.local
 .env.generated
 
 # Azure config
 .azure/
 
+# Databricks
+.databricks/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
 # Logs
 *.log
+logs/
 
 # Test files
 .test_tokens.json
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Teams manifest (contains your App ID - use manifest.json.example as template)
-manifest.json
+teams-manifest/manifest.json
 
 # Deployment packages
 *.zip
+deploy_package.zip
+teams-app.zip
+
+# Temporary files
+*.tmp
+*.temp
+manifest.json

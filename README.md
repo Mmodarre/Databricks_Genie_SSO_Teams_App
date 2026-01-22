@@ -2,7 +2,7 @@
 
 A Microsoft Teams bot that enables users to query their Databricks data using natural language through [Databricks Genie](https://docs.databricks.com/en/genie/index.html). Features **Single Sign-On (SSO)** with user identity flow - queries run with each user's own permissions for proper data governance.
 
-![Databricks Genie Bot in Action](image.png)
+![Databricks Genie Bot in Action](images/image.png)
 
 *Ask questions in natural language, get SQL queries, data tables, and auto-generated visualizations.*
 
@@ -41,7 +41,7 @@ A Microsoft Teams bot that enables users to query their Databricks data using na
 4. Genie API called with user's identity
 5. Results returned with user's data permissions applied
 
-![Databricks Genie Bot Architecture](image1.png)
+![Databricks Genie Bot Architecture](images/image1.png)
 
 
 ## Quick Start
@@ -62,12 +62,12 @@ git clone https://github.com/your-org/databricks-genie-teams-bot.git
 cd databricks-genie-teams-bot
 
 # 2. Copy and configure environment
-cp env.example .env
+cp .env.example .env
 # Edit .env with your values (TENANT_ID, DATABRICKS_HOST, GENIE_SPACE_ID)
 
 # 3. Run full deployment
-chmod +x deploy-full.sh
-./deploy-full.sh
+chmod +x scripts/deploy-full.sh
+./scripts/deploy-full.sh
 ```
 
 The script creates all Azure resources:
@@ -79,11 +79,11 @@ The script creates all Azure resources:
 
 ### Manual Steps After Deployment
 
-1. **Upload Teams App** (see [TEAMS_APP_UPLOAD.md](TEAMS_APP_UPLOAD.md) for detailed instructions)
+1. **Upload Teams App** (see [TEAMS_APP_UPLOAD.md](docs/TEAMS_APP_UPLOAD.md) for detailed instructions)
    - **Sideload** for personal testing, or
    - **Upload to Org Catalog** via [Teams Admin Center](https://admin.teams.microsoft.com) for organization-wide access
 
-2. **Configure Databricks** (see [DATABRICKS_SETUP.md](DATABRICKS_SETUP.md))
+2. **Configure Databricks** (see [DATABRICKS_SETUP.md](docs/DATABRICKS_SETUP.md))
    - Ensure users exist in Databricks workspace
    - Grant users access to your Genie Space
    - Verify Unity Catalog permissions
@@ -96,19 +96,26 @@ The script creates all Azure resources:
 ## Project Structure
 
 ```
-├── app_azure.py              # Main bot application
-├── requirements.txt          # Python dependencies
-├── startup.sh                # Azure App Service startup script
-├── deploy-full.sh            # Full automated deployment script
-├── deploy.sh                 # Infrastructure-only deployment
-├── env.example               # Environment template
-├── manifest.json.template    # Teams manifest template
-├── manifest.json.example     # Example manifest with placeholders
-├── icon-color.png            # Teams app icon (color)
-├── icon-outline.png          # Teams app icon (outline)
-├── AZURE_DEPLOYMENT_GUIDE.md # Detailed Azure setup guide
-├── DATABRICKS_SETUP.md       # Databricks configuration guide
-└── README.md                 # This file
+├── src/
+│   └── app_azure.py              # Main bot application
+├── docs/
+│   ├── AZURE_DEPLOYMENT_GUIDE.md # Detailed Azure setup guide
+│   ├── DATABRICKS_SETUP.md       # Databricks configuration guide
+│   └── TEAMS_APP_UPLOAD.md       # Teams app upload instructions
+├── scripts/
+│   └── deploy-full.sh            # Full automated deployment script
+├── teams-manifest/
+│   ├── manifest.json.template    # Teams manifest template
+│   ├── manifest.json.example     # Example manifest with placeholders
+│   ├── icon-color.png            # Teams app icon (color)
+│   └── icon-outline.png          # Teams app icon (outline)
+├── images/
+│   ├── image.png                 # Screenshot for README
+│   └── image1.png                # Architecture diagram
+├── .env.example                  # Environment template
+├── requirements.txt              # Python dependencies
+├── .gitignore
+└── README.md                     # This file
 ```
 
 ## Configuration
@@ -150,9 +157,9 @@ Compare revenue this year vs last year
 
 ## Documentation
 
-- [AZURE_DEPLOYMENT_GUIDE.md](AZURE_DEPLOYMENT_GUIDE.md) - Complete Azure setup with SSO
-- [DATABRICKS_SETUP.md](DATABRICKS_SETUP.md) - Databricks user and permission configuration
-- [TEAMS_APP_UPLOAD.md](TEAMS_APP_UPLOAD.md) - How to upload/sideload the Teams app
+- [AZURE_DEPLOYMENT_GUIDE.md](docs/AZURE_DEPLOYMENT_GUIDE.md) - Complete Azure setup with SSO
+- [DATABRICKS_SETUP.md](docs/DATABRICKS_SETUP.md) - Databricks user and permission configuration
+- [TEAMS_APP_UPLOAD.md](docs/TEAMS_APP_UPLOAD.md) - How to upload/sideload the Teams app
 
 ## Security
 
@@ -192,7 +199,7 @@ az webapp log tail --name your-bot-app --resource-group your-rg
 - Check Genie Space access permissions
 - Verify Unity Catalog grants
 
-See [AZURE_DEPLOYMENT_GUIDE.md](AZURE_DEPLOYMENT_GUIDE.md#14-troubleshooting) for more.
+See [AZURE_DEPLOYMENT_GUIDE.md](docs/AZURE_DEPLOYMENT_GUIDE.md#14-troubleshooting) for more.
 
 ## Contributing
 
