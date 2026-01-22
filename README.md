@@ -41,6 +41,9 @@ A Microsoft Teams bot that enables users to query their Databricks data using na
 4. Genie API called with user's identity
 5. Results returned with user's data permissions applied
 
+![Databricks Genie Bot Architecture](image1.png)
+
+
 ## Quick Start
 
 ### Prerequisites
